@@ -58,9 +58,9 @@
 cmake_minimum_required (VERSION 3.12)
 
 if(WIN32)
-    set(VCPKG_FALLBACK_ROOT ${CMAKE_CURRENT_BINARY_DIR}/sdl/vcpkg CACHE STRING "vcpkg configuration directory to use if vcpkg was not installed on the system before")
+    set(VCPKG_FALLBACK_ROOT ${CMAKE_CURRENT_BINARY_DIR}/vcpkg CACHE STRING "vcpkg configuration directory to use if vcpkg was not installed on the system before")
 else()
-    set(VCPKG_FALLBACK_ROOT ${CMAKE_CURRENT_BINARY_DIR}/sdl/.vcpkg CACHE STRING  "vcpkg configuration directory to use if vcpkg was not installed on the system before")
+    set(VCPKG_FALLBACK_ROOT ${CMAKE_CURRENT_BINARY_DIR}/.vcpkg CACHE STRING  "vcpkg configuration directory to use if vcpkg was not installed on the system before")
 endif()
 
 # On Windows, Vcpkg defaults to x86, even on x64 systems. If we're 
