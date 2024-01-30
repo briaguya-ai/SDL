@@ -42,6 +42,12 @@ if(NOT DEFINED OpenGL_GL_PREFERENCE)
   set(OpenGL_GL_PREFERENCE GLVND)
 endif()
 
+include(cmake/automate-vcpkg.cmake)
+set(VCPKG_TRIPLET x64-windows-static)
+set(VCPKG_TARGET_TRIPLET x64-windows-static)
+vcpkg_bootstrap()
+vcpkg_install_packages(libusb pkgconf)
+
 find_package(PkgConfig)
 
 list(APPEND CMAKE_MODULE_PATH "${SDL3_SOURCE_DIR}/cmake")
