@@ -1025,31 +1025,31 @@ macro(CheckHIDAPI)
     if(SDL_HIDAPI_LIBUSB)
       set(HAVE_LIBUSB FALSE)
 
-      set(LibUSB_PKG_CONFIG_SPEC libusb-1.0>=1.0.16)
-      pkg_check_modules(PC_LIBUSB IMPORTED_TARGET ${LibUSB_PKG_CONFIG_SPEC})
-      if(PC_LIBUSB_FOUND)
-        cmake_push_check_state()
-        list(APPEND CMAKE_REQUIRED_INCLUDES ${PC_LIBUSB_INCLUDE_DIRS})
-        list(APPEND CMAKE_REQUIRED_LIBRARIES PkgConfig::PC_LIBUSB)
-        check_c_source_compiles("
-          #include <stddef.h>
-          #include <libusb.h>
-          int main(int argc, char **argv) {
-            libusb_close(NULL);
-            return 0;
-          }" HAVE_LIBUSB_H)
-        cmake_pop_check_state()
-        if(HAVE_LIBUSB_H)
-          set(HAVE_LIBUSB TRUE)
-          FindLibraryAndSONAME("usb-1.0" LIBDIRS ${PC_LIBUSB_LIBRARY_DIRS})
-          if(SDL_HIDAPI_LIBUSB_SHARED AND USB_1.0_LIB_SONAME)
-            set(HAVE_HIDAPI_LIBUSB_SHARED ON)
-            set(SDL_LIBUSB_DYNAMIC "\"${USB_1.0_LIB_SONAME}\"")
-            sdl_link_dependency(hidapi INCLUDES $<TARGET_PROPERTY:PkgConfig::PC_LIBUSB,INTERFACE_INCLUDE_DIRECTORIES>)
-          else()
-            sdl_link_dependency(hidapi LIBS PkgConfig::PC_LIBUSB PKG_CONFIG_PREFIX PC_LIBUSB PKG_CONFIG_SPECS ${LibUSB_PKG_CONFIG_SPEC})
-          endif()
-        endif()
+      # set(LibUSB_PKG_CONFIG_SPEC libusb-1.0>=1.0.16)
+      # pkg_check_modules(PC_LIBUSB IMPORTED_TARGET ${LibUSB_PKG_CONFIG_SPEC})
+      # if(PC_LIBUSB_FOUND)
+      cmake_push_check_state()
+      # list(APPEND CMAKE_REQUIRED_INCLUDES ${PC_LIBUSB_INCLUDE_DIRS})
+      # list(APPEND CMAKE_REQUIRED_LIBRARIES PkgConfig::PC_LIBUSB)
+      check_c_source_compiles("
+        #include <stddef.h>
+        #include <libusb.h>
+        int main(int argc, char **argv) {
+          libusb_close(NULL);
+          return 0;
+        }" HAVE_LIBUSB_H)
+      cmake_pop_check_state()
+      if(HAVE_LIBUSB_H)
+        set(HAVE_LIBUSB TRUE)
+        # FindLibraryAndSONAME("usb-1.0" LIBDIRS ${PC_LIBUSB_LIBRARY_DIRS})
+        # if(SDL_HIDAPI_LIBUSB_SHARED AND USB_1.0_LIB_SONAME)
+        # set(HAVE_HIDAPI_LIBUSB_SHARED ON)
+        # set(SDL_LIBUSB_DYNAMIC "\"${USB_1.0_LIB_SONAME}\"")
+        # sdl_link_dependency(hidapi INCLUDES $<TARGET_PROPERTY:PkgConfig::PC_LIBUSB,INTERFACE_INCLUDE_DIRECTORIES>)
+        # else()
+        # sdl_link_dependency(hidapi LIBS PkgConfig::PC_LIBUSB PKG_CONFIG_PREFIX PC_LIBUSB PKG_CONFIG_SPECS ${LibUSB_PKG_CONFIG_SPEC})
+        # endif()
+      # endif()
       endif()
       set(HAVE_HIDAPI_LIBUSB ${HAVE_LIBUSB})
     endif()
